@@ -1,11 +1,13 @@
 package cesur.dam.inventarioappg1.controllers;
 
+import cesur.dam.inventarioappg1.sceneManager.SceneManager;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 
 public class LoginController {
 
-    @javafx.fxml.FXML
+    @FXML
     public void login(ActionEvent actionEvent) {
-        /* TODO */
+        SceneManager.goTo("main");
     }
 }
