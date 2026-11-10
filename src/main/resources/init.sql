@@ -1,4 +1,4 @@
-create table Equipo
+create table if not exists Equipo
 (
     id         int auto_increment
         primary key,
