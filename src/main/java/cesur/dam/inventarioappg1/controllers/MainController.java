@@ -5,6 +5,7 @@ import cesur.dam.inventarioappg1.data.EquipoJdbcDAO;
 import cesur.dam.inventarioappg1.models.Equipo;
 import cesur.dam.inventarioappg1.sceneManager.SceneManager;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,13 +23,16 @@ public class MainController implements Initializable {
     @FXML private TableColumn<Equipo, String> cCategory;
     @FXML private TableColumn<Equipo, String> cAvailability;
 
+    private final EquipoJdbcDAO dao = new EquipoJdbcDAO(DataSourceFactory.getDataSource());
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cId.setCellValueFactory(row -> new SimpleStringProperty(String.valueOf(row.getValue().getId())));
         cName.setCellValueFactory(row -> new SimpleStringProperty(row.getValue().getNombre()));
         cCategory.setCellValueFactory(row -> new SimpleStringProperty(String.valueOf(row.getValue().getCategoria()).toUpperCase()));
         cAvailability.setCellValueFactory(row -> new SimpleStringProperty(row.getValue().getDisponible() ? "disponible" : "no disponible"));
-        // TODO: cargar datos desde el DAO
+
+        table.setItems(FXCollections.observableArrayList(dao.findAll()));
     }
 
     @FXML
@@ -40,5 +44,4 @@ public class MainController implements Initializable {
     public void logout(ActionEvent e) {
         SceneManager.goTo("login");
     }
-    private final EquipoJdbcDAO dao = new EquipoJdbcDAO(DataSourceFactory.getDataSource());
 }
